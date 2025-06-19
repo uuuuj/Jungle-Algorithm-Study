@@ -41,7 +41,7 @@ def bfs():
             # 그래프 범위 안에 있고, 익지 않은 토마토(0)라면
             if 0 <= nx < n and 0 <= ny < m and graph[nx][ny] == 0:
                 # 익은 날짜 표시 : 현재 토마토의 날짜 + 1
-                # graph[x][y] : queue에 넣어두었던, 익은 토마토의 값에 + 1로 업데이트트
+                # graph[x][y] : queue에 넣어두었던, 익은 토마토의 값에 + 1로 업데이트
                 graph[nx][ny] = graph[x][y] + 1 
                 # 이미 익었던 토마토로 인해 익은 토마토가 되었으니 queue에 넣어준다
                 queue.append((nx, ny))
