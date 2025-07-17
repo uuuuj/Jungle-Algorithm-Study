@@ -21,16 +21,17 @@ int bfs(int x, int y, vector<vector<int>>& homes) {
 	// 하, 상, 우, 좌
 	int dx[4] = {1, -1, 0, 0};
 	int dy[4] = {0, 0, 1, -1};
-
+	
 	while (!q.empty()) {
 		auto [x, y] = q.front();
 		q.pop();
-
+		
 		for (int i = 0; i < 4; ++i) {
 			int new_x = x + dx[i], new_y = y + dy[i];
 			if (new_x < 0 || new_y < 0 || new_x >= N || new_y >=N) continue;
-
+			
 			if (homes[new_x][new_y] == 1) {
+				// 큐에 넣기
 				q.push({new_x, new_y});
 				homes[new_x][new_y] = -1;
 				++count;
@@ -54,22 +55,15 @@ int main() {
 		}
 	}
 
-	// 상 하 좌 우
-	// dx, dy
-	// int block = 0;
 	vector<int> block;
 	for (int i = 0; i < N; ++i) {
 		for (int j = 0; j < N; ++j) {
 			if (homes[i][j] == 1) {
 				block.push_back(bfs(i, j, homes));
-				// 큐에 넣기?
-				// 얘를 기준으로 상하좌우 bfs 돌리면서
-				// 큐에 넣어야 할 듯
 			}
 		}
 	}
 
-	// 단지수
 	// 단지별 집 수 오름차순
 	sort(block.begin(), block.end());
     cout << block.size() << endl;
