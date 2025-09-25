@@ -27,8 +27,7 @@ void calChickenDist(vector<pair<int, int>>& selected) {
 void combination(vector<pair<int, int>> selected, int idx) {
 	selected.push_back(chicken[idx]);
 	if (selected.size() >= M) {
-		// 최솟값 연산
-		calChickenDist(selected);
+		calChickenDist(selected); // 최솟값 연산
 		return;
 	}
 	for (int i = idx+1; i < chicken.size(); ++i) {
@@ -40,13 +39,10 @@ int main() {
     cin >> N >> M;
 	minVal = 4 * pow(N, 2) + 1;
 	
-	vector<vector<int>> city(N, vector<int>(N));
-	
 	for (int i = 0; i < N; ++i) {
 		for (int j = 0; j < N; j++) {
 			int val;
 			cin >> val;
-			arr[i][j] = val;
 			if (val == 1) {
 				houses.push_back({i, j});
 			}
@@ -57,14 +53,11 @@ int main() {
 	}
 
 	vector<pair<int, int>> selected;
-	// combination
 	for (int i = 0; i < chicken.size(); ++i) {
-		combination(selected, i);
+		combination(selected, i); // combination
 	}
 	
-	// 0 빈 1 집 2 치킨
-	
-	cout << answer + 1 << " " << max + 1 << endl;
+	cout << minVal << endl;
 
     return 0;
 }
