@@ -4,23 +4,23 @@
 #include <queue>
 #include <vector>
 #include <tuple>
+#include <array>
 
 using namespace std;
 
 int n, m;
 
-int bfs(pair<int, int> start, vector<vector<char>>& prison, vector<vector<int>>& visited) {
+int bfs(pair<int, int> start, vector<vector<char>>& prison, vector<vector<array<bool,4>>>& visited) {
 	int move = 0;
-	queue<tuple<int, int, int, bool>> q;
+	queue<tuple<int, int, int>> q;
 	
 	auto [startX, startY] = start;
-	q.push({startX, startY, -1, false});
-	visited[startX][startY] = 0;
+	q.push({startX, startY, -1});
 
 	while (!q.empty()) {
 		int size = q.size();
 		for (int i = 0; i < size; ++i) {
-			auto [x, y, dir, isUturn] = q.front();
+			auto [x, y, dir] = q.front();
 			q.pop();
 	
 			// 상하좌우
@@ -35,17 +35,10 @@ int bfs(pair<int, int> start, vector<vector<char>>& prison, vector<vector<int>>&
 				
 				if (prison[newX][newY] == 'E') return ++move;
 				
-				if (dir >=0 && dx[dir] == (dx[k] * -1) && dy[dir] == (dy[k] * -1)) {
-					if (isUturn) continue;
-					isUturn = true;
-				}
-				else isUturn = false;
-
-				// visited
-				if (visited[newX][newY] == isUturn) continue;
+				if (visited[newX][newY][k]) continue;
 	
-				q.push({newX, newY, k, isUturn});
-				visited[newX][newY] = isUturn;
+				q.push({newX, newY, k});
+				visited[newX][newY][k] = true;
 			}
 		}
 		++move;
@@ -58,7 +51,9 @@ int main() {
     cin >> n >> m;
 	
 	vector<vector<char>> prison(n, vector<char>(m));
-	vector<vector<int>> visited(n, vector<int>(m, -1));
+	vector<vector<array<bool,4>>> visited(
+        n, vector<array<bool,4>>(m, {false,false,false,false})
+    );
 	pair<int, int> start;
 	for (int i = 0; i < n; ++i) {
 		string line;
