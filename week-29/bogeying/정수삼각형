@@ -1,0 +1,6 @@
+def solution(t):
+    for row in range(len(t)-2, -1, -1):
+        for col in range(len(t[row])):
+            t[row][col] += max(t[row+1][col], t[row+1][col+1])
+    
+    return t[0][0]
